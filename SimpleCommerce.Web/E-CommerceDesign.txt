@@ -1,0 +1,88 @@
+
+1. System Design
+
+Problem
+-> User Need 
+-> System behavior
+-> Data Flow
+-> Architecture 
+-> Technology
+
+2. Architecture
+-> Business Understanding 
+	1. Need: Client wants an E-commerce website
+	2. Goal: Sell products online
+	3. System Goal: The user can browse products and purchase them
+-> Actor
+	1. Admin
+	2. Customer
+	3. Payment Gateway
+-> Use Case Analysis
+	1. Admin
+		-> Add/Update Products
+		-> Manage Order
+	2. Customer
+		-> Browse
+		-> Add to cart
+		-> Checkout
+-> Flow
+	1. Customer
+	-> Visit
+	-> Cart Product 
+	-> Checkout (Logged In)
+	-> Create Order
+	-> Payment
+-> Identify Core Entities
+	1. User (Customer, Admin)
+	2. Product
+	3. Product Price
+	4. Category
+	5. Cart
+	6. Order (Status)
+	7. Payment
+-> Data Relation
+	-> Category
+		   -> Product
+			-> Cart Item
+			-> Order Item
+
+	-> User
+		-> Cart
+			-> Cart Item
+				-> Product
+		-> Order
+			-> Order Item
+				-> Product
+-> System Architecture
+	-> Layered Architecture MVC Pattern
+
+-> Features (Component)
+	1. Product Module
+	2. Cart Module
+	3. Payment Module
+	4. Admin Module
+
+-> UI 
+-> Performance 
+	1. How to handle many users? 
+	-> Caching
+	-> Database Indexing
+	-> Server Side Pagination 
+
+-> Security 
+	1. Authentication/Authorization 
+	2. Data Validation
+
+-> Deployment 
+
+
+
+
+
+
+
+
+
+
+
+
