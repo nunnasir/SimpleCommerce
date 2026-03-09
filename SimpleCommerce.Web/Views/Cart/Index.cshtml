@@ -80,7 +80,10 @@ else
         </div>
         <div class="card-footer bg-white d-flex justify-content-between align-items-center">
             <span class="fw-bold">Total: @Model.Sum(x => x.LineTotal).ToString("0.00")</span>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+            <div>
+                <a asp-action="Checkout" class="btn btn-success me-2">Checkout</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+            </div>
         </div>
     </div>
 }

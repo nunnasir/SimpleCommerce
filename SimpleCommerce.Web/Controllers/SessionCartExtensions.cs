@@ -27,6 +27,11 @@ public static class SessionCartExtensions
         session.SetString(CartKey, JsonSerializer.Serialize(cart));
     }
 
+    public static void ClearCart(this ISession session)
+    {
+        session.SetString(CartKey, "[]");
+    }
+
     public static int GetCartItemCount(this ISession session)
     {
         return session.GetCart().Sum(x => x.Quantity);

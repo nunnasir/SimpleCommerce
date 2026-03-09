@@ -1,0 +1,49 @@
+@model IReadOnlyList<SimpleCommerce.Contract.OrderDto>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <h2 class="mb-0">Orders</h2>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+            <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Mobile</th>
+                <th class="text-end">Total</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.CreatedAtUtc.ToLocalTime().ToString("g")</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.Mobile</td>
+                    <td class="text-end">@order.Total.ToString("0.00")</td>
+                    <td>
+                        <span class="badge @(order.Status == "Delivered" ? "bg-success" : order.Status == "InProgress" ? "bg-primary" : "bg-secondary")">@order.Status</span>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card-body text-center text-muted py-4">No orders yet.</div>
+    }
+</div>

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleCommerce.BLL.Interfaces;
 using SimpleCommerce.BLL.Services;
+using SimpleCommerce.Contract;
 using SimpleCommerce.DAL;
 using SimpleCommerce.DAL.Interfaces;
 using SimpleCommerce.DAL.UnitOfWork;
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<SimpleCommerceDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

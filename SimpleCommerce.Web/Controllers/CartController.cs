@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleCommerce.BLL.Interfaces;
+using SimpleCommerce.Contract;
 using SimpleCommerce.Web.Models;
 
 namespace SimpleCommerce.Web.Controllers;
 
 public class CartController : Controller
 {
-    private const string CartKey = "Cart";
     private readonly IProductService _productService;
+    private readonly IOrderService _orderService;
 
-    public CartController(IProductService productService)
+    public CartController(IProductService productService, IOrderService orderService)
     {
         _productService = productService;
+        _orderService = orderService;
     }
 
     public IActionResult Index()
@@ -88,5 +90,41 @@ public class CartController : Controller
         TempData["ToastType"] = "success";
         HttpContext.Session.SetCart(cart);
         return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Checkout()
+    {
+        var cart = HttpContext.Session.GetCart();
+        if (cart == null || !cart.Any())
+            return RedirectToAction(nameof(Index));
+
+        return View(new CheckoutViewModel());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Checkout(CheckoutViewModel model)
+    {
+        var cart = HttpContext.Session.GetCart();
+        if (cart == null || !cart.Any())
+            return RedirectToAction(nameof(Index));
+
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var items = cart.Select(c => new CartItemDto
+        {
+            ProductId = c.ProductId,
+            ProductName = c.ProductName,
+            Price = c.Price,
+            Quantity = c.Quantity
+        }).ToList();
+
+        await _orderService.CreateOrderAsync(model.CustomerName, model.Mobile, model.Address, items);
+        HttpContext.Session.ClearCart();
+
+        TempData["ToastMessage"] = "Order placed successfully. Thank you!";
+        TempData["ToastType"] = "success";
+        return RedirectToAction(nameof(Index), "Home");
     }
 }

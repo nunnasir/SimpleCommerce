@@ -1,0 +1,73 @@
+@model SimpleCommerce.Web.Models.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+    var cart = Context.Session.GetCart();
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0">Checkout</h2>
+        <p class="text-muted">Enter your details to complete the order.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Customer Details</h5>
+                <form asp-action="Checkout" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label asp-for="CustomerName" class="form-label"></label>
+                        <input asp-for="CustomerName" class="form-control" />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Mobile" class="form-label"></label>
+                        <input asp-for="Mobile" class="form-control" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label"></label>
+                        <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">Place Order</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Back to Cart</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Order Summary</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in cart)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>@item.ProductName × @item.Quantity</span>
+                            <span>@item.LineTotal.ToString("0.00")</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between fw-bold">
+                    <span>Total</span>
+                    <span>@cart.Sum(x => x.LineTotal).ToString("0.00")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

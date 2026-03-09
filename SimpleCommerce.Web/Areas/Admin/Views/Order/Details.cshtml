@@ -1,0 +1,100 @@
+@model SimpleCommerce.Contract.OrderDto
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Order Details</h2>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to Orders</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Customer</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted">Name</dt>
+                    <dd class="col-sm-8">@Model.CustomerName</dd>
+                    <dt class="col-sm-4 text-muted">Mobile</dt>
+                    <dd class="col-sm-8">@Model.Mobile</dd>
+                    <dt class="col-sm-4 text-muted">Address</dt>
+                    <dd class="col-sm-8">@Model.Address</dd>
+                    <dt class="col-sm-4 text-muted">Date</dt>
+                    <dd class="col-sm-8">@Model.CreatedAtUtc.ToLocalTime().ToString("f")</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Update Status</h5>
+                <span class="badge @(Model.Status == "Delivered" ? "bg-success" : Model.Status == "InProgress" ? "bg-primary" : "bg-secondary")">@Model.Status</span>
+            </div>
+            <div class="card-body">
+                <div class="d-flex gap-2 flex-wrap">
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="status" value="Pending" />
+                        <button type="submit" class="btn @(Model.Status == "Pending" ? "btn-secondary" : "btn-outline-secondary") btn-sm">Pending</button>
+                    </form>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="status" value="InProgress" />
+                        <button type="submit" class="btn @(Model.Status == "InProgress" ? "btn-primary" : "btn-outline-primary") btn-sm">In Progress</button>
+                    </form>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="status" value="Delivered" />
+                        <button type="submit" class="btn @(Model.Status == "Delivered" ? "btn-success" : "btn-outline-success") btn-sm">Delivered</button>
+                    </form>
+                </div>
+                <p class="text-muted small mt-2 mb-0">Click a status to update the order.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Items</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.OrderItems)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td class="text-end">@item.Price.ToString("0.00")</td>
+                            <td class="text-center">@item.Quantity</td>
+                            <td class="text-end">@item.LineTotal.ToString("0.00")</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer bg-white fw-bold">
+                <div class="d-flex justify-content-between">
+                    <span>Order Total</span>
+                    <span>@Model.Total.ToString("0.00")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
