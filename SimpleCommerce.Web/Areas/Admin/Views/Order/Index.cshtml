@@ -30,7 +30,7 @@
                     <td>@order.CreatedAtUtc.ToLocalTime().ToString("g")</td>
                     <td>@order.CustomerName</td>
                     <td>@order.Mobile</td>
-                    <td class="text-end">@order.Total.ToString("0.00")</td>
+                    <td class="text-end">@order.Total.ToString("#,##0.00")</td>
                     <td>
                         <span class="badge @(order.Status == "Delivered" ? "bg-success" : order.Status == "InProgress" ? "bg-primary" : "bg-secondary")">@order.Status</span>
                     </td>

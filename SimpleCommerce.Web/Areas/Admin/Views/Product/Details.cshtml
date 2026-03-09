@@ -26,7 +26,7 @@
                     <dd class="col-sm-9">@(Model.Description ?? "—")</dd>
 
                     <dt class="col-sm-3 text-muted">Price</dt>
-                    <dd class="col-sm-9">@Model.Price.ToString("0.00")</dd>
+                    <dd class="col-sm-9">@Model.Price.ToString("#,##0.00")</dd>
                 </dl>
             </div>
             <div class="col-md-6">

@@ -81,9 +81,9 @@
                     {
                         <tr>
                             <td>@item.ProductName</td>
-                            <td class="text-end">@item.Price.ToString("0.00")</td>
+                            <td class="text-end">@item.Price.ToString("#,##0.00")</td>
                             <td class="text-center">@item.Quantity</td>
-                            <td class="text-end">@item.LineTotal.ToString("0.00")</td>
+                            <td class="text-end">@item.LineTotal.ToString("#,##0.00")</td>
                         </tr>
                     }
                     </tbody>
@@ -92,7 +92,7 @@
             <div class="card-footer bg-white fw-bold">
                 <div class="d-flex justify-content-between">
                     <span>Order Total</span>
-                    <span>@Model.Total.ToString("0.00")</span>
+                    <span>@Model.Total.ToString("#,##0.00")</span>
                 </div>
             </div>
         </div>

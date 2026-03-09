@@ -47,7 +47,7 @@ else
                                 <span>@item.ProductName</span>
                             </div>
                         </td>
-                        <td class="text-end">@item.Price.ToString("0.00")</td>
+                        <td class="text-end">@item.Price.ToString("#,##0.00")</td>
                         <td class="text-center">
                             <div class="d-flex align-items-center justify-content-center gap-1">
                                 <form asp-action="UpdateQuantity" method="post" class="d-inline">
@@ -65,7 +65,7 @@ else
                                 </form>
                             </div>
                         </td>
-                        <td class="text-end fw-bold">@item.LineTotal.ToString("0.00")</td>
+                        <td class="text-end fw-bold">@item.LineTotal.ToString("#,##0.00")</td>
                         <td>
                             <form asp-action="Remove" method="post" class="d-inline" onsubmit="return confirm('Remove this item?');">
                                 @Html.AntiForgeryToken()
@@ -79,7 +79,7 @@ else
             </table>
         </div>
         <div class="card-footer bg-white d-flex justify-content-between align-items-center">
-            <span class="fw-bold">Total: @Model.Sum(x => x.LineTotal).ToString("0.00")</span>
+            <span class="fw-bold">Total: @Model.Sum(x => x.LineTotal).ToString("#,##0.00")</span>
             <div>
                 <a asp-action="Checkout" class="btn btn-success me-2">Checkout</a>
                 <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
