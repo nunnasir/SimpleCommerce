@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col-lg-8">
+        <h2 class="mb-2">Admin Dashboard</h2>
+        <p class="text-muted mb-0">Welcome to the admin panel. Use the shortcuts below to manage your store.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Products</h5>
+                <p class="card-text flex-grow-1">View, create, and manage products.</p>
+                <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-primary mt-2">Manage Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+
