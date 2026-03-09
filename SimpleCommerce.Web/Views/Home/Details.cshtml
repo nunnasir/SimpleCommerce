@@ -32,7 +32,10 @@
             @(string.IsNullOrWhiteSpace(Model.Description) ? "No description available." : Model.Description)
         </p>
 
-        <button type="button" class="btn btn-primary me-2" disabled>Add to Cart</button>
+        <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-primary me-2">Add to Cart</button>
+        </form>
         <a asp-action="Index" class="btn btn-outline-secondary">Back to Products</a>
     </div>
 </div>

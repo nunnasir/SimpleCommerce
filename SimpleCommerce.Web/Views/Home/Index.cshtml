@@ -31,7 +31,10 @@
                 </div>
                 <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
                     <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-secondary btn-sm">Details</a>
-                    <button type="button" class="btn btn-primary btn-sm" disabled>Add to Cart</button>
+                    <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+                    </form>
                 </div>
             </div>
         </div>
